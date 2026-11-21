@@ -1,0 +1,25 @@
+{
+  "kpi": {
+    "total_sales": 8952027.0,
+    "total_profit": 1312415.0,
+    "avg_order_value": 1386.84,
+    "overall_margin_pct": 14.7,
+    "loss_line_share_pct": 48.1,
+    "n_customers": 2703,
+    "date_min": "2013-01-04",
+    "date_max": "2016-12-29"
+  },
+  "cleaning_log": {
+    "rows_raw": 9426,
+    "rows_after_dedup": 9426,
+    "duplicate_rows_removed": 0,
+    "missing_values_per_column": {
+      "Order Priority": 1881
+    },
+    "order_priority_repaired_to_missing": "Not Specified -> NaN",
+    "derived_columns": [
+      "Month",
+      "Profit Margin %"
+    ]
+  }
+}
