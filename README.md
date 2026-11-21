@@ -31,11 +31,11 @@ Exploratory analysis of the classic Tableau *Sample Superstore* retail dataset
 
 **Discounts destroy profit** — average line profit collapses as discounts rise (combo: bars = avg profit, line = loss share):
 
-![](outputs/q3_discount_impact.png)
+![](q3_discount_impact.png)
 
 **Best and worst regions** — South earns half the company-average margin:
 
-![](outputs/q2_region.png)
+![](q2_region.png)
 
 ## Repo layout
 
