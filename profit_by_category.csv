@@ -1,18 +1,18 @@
-Category,Sales,Profit,Margin
-Telephones and Communication,1144284,297944,26.0
-Binders and Binder Accessories,638583,226582,35.5
-Office Machines,1218655,168079,13.8
-Chairs & Chairmats,1164586,165341,14.2
-Copiers and Fax,661215,129154,19.5
-Appliances,456736,121641,26.6
-Office Furnishings,444634,92216,20.7
-Computer Peripherals,490851,87911,17.9
-Envelopes,147915,46133,31.2
-Paper,253620,35360,13.9
-Labels,23446,17776,75.8
-Storage & Organization,585717,8071,1.4
-Pens & Art Supplies,103265,1202,1.2
-"Scissors, Rulers and Trimmers",40432,-1938,-4.8
-Rubber Bands,8670,-2837,-32.7
-Bookcases,507496,-7714,-1.5
-Tables,1061922,-72506,-6.8
+Category,Sales,Profit,Lines,Avg_Discount,Margin %
+Tables,1061922,-72506,404,0.051,-6.8
+Bookcases,507496,-7714,206,0.047,-1.5
+Rubber Bands,8670,-2837,195,0.051,-32.7
+"Scissors, Rulers and Trimmers",40432,-1938,155,0.049,-4.8
+Pens & Art Supplies,103265,1202,721,0.052,1.2
+Storage & Organization,585717,8071,610,0.051,1.4
+Labels,23446,17776,329,0.049,75.8
+Paper,253620,35360,1379,0.049,13.9
+Envelopes,147915,46133,272,0.049,31.2
+Computer Peripherals,490851,87911,846,0.049,17.9
+Office Furnishings,444634,92216,883,0.048,20.7
+Appliances,456736,121641,492,0.051,26.6
+Copiers and Fax,661215,129154,98,0.052,19.5
+Chairs & Chairmats,1164586,165341,440,0.05,14.2
+Office Machines,1218655,168079,376,0.051,13.8
+Binders and Binder Accessories,638583,226582,1028,0.05,35.5
+Telephones and Communication,1144284,297944,992,0.048,26.0

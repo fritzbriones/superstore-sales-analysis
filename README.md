@@ -1,90 +1,85 @@
 # Superstore Sales & Profitability Analysis
 
-**Week 1 portfolio project** — Data Science & Analytics Intensive Bootcamp.
-Exploratory analysis of the classic Tableau *Sample Superstore* retail dataset
-(9,426 transactions, 2013–2016, 2,703 customers).
+**Business question:** where does this office-supplies retailer make and lose money,
+and what should management look at first?
 
-## Business questions
+Dataset: the *Superstore* training file that ships with Packt's *Learning Tableau 10*
+(9,426 order lines, 2013–2016, 2,703 customers, **fictional company**). See
+[Data source and verification](#data-source-and-verification).
 
-1. Which product categories earn the highest profit?
-2. Which region performs best (and worst)?
-3. Are discounts reducing profit?
-4. Which customer segment generates the most revenue?
-5. How do sales trend over time?
+## Recommendations
 
-## Key findings
+| # | Action | Evidence |
+|---|---|---|
+| 1 | **Review pricing and freight on Tables (and Bookcases).** | They lose **$80K on $1.57M** of sales. Tables lose money in 3 of 4 regions, and 66% of Tables lines are unprofitable. Their discounts are average (5.1% vs 5.0%), so the problem is price/cost, not discounting. Average shipping cost per line is $57, the highest of any sub-category. |
+| 2 | **Investigate the South region.** | South earns a **7.1%** margin vs 14.7% company-wide. If South earned the other regions' margin in each sub-category, profit would be **~$125K** higher. $58K of that gap is in Telephones & Communication alone. |
+| 3 | **Put an approval step on discounts above 5%.** | Lines discounted 6–10% earn a **10.6%** margin vs **17.7%** at 1–5% (4,183 vs 4,390 lines, both large samples). If the 6–10% tier earned the 1–5% margin, that is ~$270K more profit. This is an association, not proven causation; see the [correlation-vs-causation follow-up](https://github.com/fritzbriones/superstore-correlation-vs-causation). |
+| 4 | **Don't use this file for growth or seasonality claims.** | 15 of 48 months have under $10K of sales and Mar–May 2016 has none, so year-over-year comparisons are an artifact of the sample. |
 
-- **Overall**: $8.95M sales, $1.31M profit, **14.7% margin**, avg order value $1,387.
-- **Best categories**: Telephones & Communication ($298K profit) and Binders
-  ($227K at a 35.5% margin — the best margin in the top 5).
-- **Best region**: Central (20.0% margin). **Worst**: South — 7.1% margin,
-  roughly half the company average.
-- **Discounts hurt**: average line profit falls from $185 at 0% discount to $97
-  at 6–10%, and every line discounted above 15% in this data lost money.
-- **Segments**: Corporate leads with 36.5% of revenue; Consumer is only 20.5%.
-- **Seasonality**: sales grow year over year (2013 is a partial ramp-up year),
-  with Q4 spikes visible in the monthly trend.
-- **Loss concentration**: 48% of transaction lines are unprofitable; the five
-  worst items (printers, videoconferencing units, furniture) lose up to $40K each.
+## Key numbers
+
+- **$8.95M** sales, **$1.31M** profit, **14.7%** margin
+- 8,171 orders (Order ID + Order Date), average order **$1,096**
+- **48%** of lines lose money, which is very high for a retailer and another sign this is training data
+- Segments: Corporate is the largest (36.5% of sales); Small Business is the smallest (18.7%) but has the best margin (18.9%)
 
 ## Charts
 
-**Discounts destroy profit** — average line profit collapses as discounts rise (combo: bars = avg profit, line = loss share):
+**Where profit is made and lost**, all 17 sub-categories:
+![](q1_profit_by_category.png)
 
-![](q3_discount_impact.png)
-
-**Best and worst regions** — South earns half the company-average margin:
-
+**Regional margin:**
 ![](q2_region.png)
 
-## Repo layout
+**Discount tiers.** Only tiers with enough lines to judge are shown (5 lines above 10% are excluded):
+![](q3_discount_impact.png)
 
-```
-├── README.md
-├── requirements.txt
-├── data/
-│   ├── raw_superstore.csv       # source data — add via GitHub web upload (2.3 MB)
-│   └── superstore_clean.csv     # cleaned dataset (written by src/analyze.py)
-├── src/
-│   └── analyze.py               # full pipeline: clean → KPIs → charts
-└── outputs/
-    ├── kpi.json                 # KPIs + cleaning log (provenance)
-    ├── q1_profit_by_category.png
-    ├── q2_region.png
-    ├── q3_discount_impact.png
-    ├── q4_segment.png
-    ├── q5_monthly_trend.png
-    └── *.csv                    # aggregated tables behind each chart
-```
+**Customer segments:**
+![](q4_segment.png)
 
-## Data cleaning decisions (src/analyze.py)
+**Monthly sales coverage.** Why this file can't answer "are we growing?":
+![](q5_monthly_trend.png)
 
-- Source CSV decoded as `latin-1` (non-UTF-8 characters in product names).
-- Deduplicate on full rows: **0 duplicates found**; rule kept for reproducibility.
-- `Order Priority == "Not Specified"` (1,881 rows) converted to a true missing
-  value instead of a fake category.
-- Zero missing values in all other columns.
-- Derived fields: `Month` (order period) and `Profit Margin %` per line.
-- Every decision is logged into `outputs/kpi.json` under `cleaning_log`.
+## Data audit (all in `kpi.json` → `data_audit`)
+
+| Check | Result | Decision |
+|---|---|---|
+| Exact duplicates | 0 | Rule kept for reproducibility |
+| `Order Priority = "Not Specified"` | 1,881 lines | Converted to missing |
+| `Row ID` | Contains dates (e.g. 11/18/1951) in the publisher's own file | Column dropped; not an identifier |
+| `Order ID` reused across dates | 1,448 of 6,455 IDs appear on 2+ different order dates (some years apart) | An order is defined as Order ID + Order Date (8,171 orders) |
+| Profit > Sales on a line | 367 lines | Kept but flagged here; impossible for real data (margin >100%) |
+| Shipped >30 days after order | 419 lines | Kept |
+| Months with no orders | 2016-03, 2016-04, 2016-05 | Shown as gaps; no trend claims |
+
+## Limitations
+
+- **Fictional data.** Findings show the method, not facts about a real company.
+- **Associations, not causes.** Region, discount and category effects overlap. The follow-up repo tests the discount claim properly.
+- Profit figures are taken as given; the 367 lines with profit greater than sales suggest the generator didn't enforce consistency.
+
+## Data source and verification
+
+`raw_superstore.csv` is **byte-for-byte identical** to `Chapter 01/Superstore.csv` in
+Packt's official repo [PacktPublishing/Learning-Tableau-10](https://github.com/PacktPublishing/Learning-Tableau-10)
+(2,135,360 bytes, 9,426 rows, 25 columns, checked on 2026-11-23).
+
+It is **not** Tableau's built-in *Sample – Superstore*, which has different columns (Segment, Sub-Category, Product ID) and different values. Packt itself tells readers to use its supplied Superstore.csv instead of Tableau's sample because the results differ.
 
 ## Reproduce
 
 ```bash
 pip install -r requirements.txt
-python src/analyze.py
+python analyze.py
 ```
 
-All figures and tables are regenerated deterministically from `data/raw_superstore.csv`
-(the source CSV is distributed in this repo's releases / can be re-added via the
-Tableau Sample Superstore dataset).
+Regenerates every chart, table and `kpi.json` from `raw_superstore.csv` (deterministic).
 
-## Data source
+## Files
 
-Tableau's public *Sample Superstore* training dataset
-(the version distributed with "Learning Tableau 10", Packt Publishing).
-License: intended for education and portfolio use.
-
-## Skills demonstrated
-
-Data cleaning with documented decisions · KPI design · groupby aggregation ·
-visual exploratory analysis · insight storytelling for business stakeholders.
+| File | What it is |
+|---|---|
+| `analyze.py` | Full pipeline: audit → clean → KPIs → 5 charts |
+| `raw_superstore.csv` | Source data (unchanged) |
+| `kpi.json` | KPIs + data-audit results |
+| `profit_by_category.csv`, `region_performance.csv`, `south_gap_by_category.csv`, `discount_impact.csv`, `segment_performance.csv`, `monthly_trend.csv` | Tables behind each chart |

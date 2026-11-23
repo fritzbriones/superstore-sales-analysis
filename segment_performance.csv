@@ -1,5 +1,5 @@
-Customer Segment,Sales,Profit,Sales share %
-Consumer,1835242,206546,20.5
-Corporate,3269431,505515,36.5
-Home Office,2168965,283884,24.2
-Small Business,1678389,316470,18.7
+Customer Segment,Sales,Profit,Customers,Sales share %,Margin %
+Corporate,3269431,505515,1111,36.5,15.5
+Home Office,2168965,283884,734,24.2,13.1
+Consumer,1835242,206546,615,20.5,11.3
+Small Business,1678389,316470,672,18.7,18.9
