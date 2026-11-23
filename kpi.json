@@ -1,25 +1,50 @@
 {
   "kpi": {
-    "total_sales": 8952027.0,
-    "total_profit": 1312415.0,
-    "avg_order_value": 1386.84,
+    "total_sales": 8952027,
+    "total_profit": 1312415,
     "overall_margin_pct": 14.7,
+    "lines": 9426,
+    "orders": 8171,
+    "avg_order_value": 1095.59,
+    "customers": 2703,
     "loss_line_share_pct": 48.1,
-    "n_customers": 2703,
     "date_min": "2013-01-04",
-    "date_max": "2016-12-29"
-  },
-  "cleaning_log": {
-    "rows_raw": 9426,
-    "rows_after_dedup": 9426,
-    "duplicate_rows_removed": 0,
-    "missing_values_per_column": {
-      "Order Priority": 1881
+    "date_max": "2016-12-29",
+    "discount_6_10_margin_pct": 10.6,
+    "discount_1_5_margin_pct": 17.7,
+    "discount_6_10_sales": 3813126,
+    "profit_if_6_10_tier_earned_1_5_margin": 270447,
+    "loss_making_subcategories": {
+      "Tables": -72506,
+      "Bookcases": -7714,
+      "Rubber Bands": -2837,
+      "Scissors, Rulers and Trimmers": -1938
     },
-    "order_priority_repaired_to_missing": "Not Specified -> NaN",
-    "derived_columns": [
-      "Month",
-      "Profit Margin %"
-    ]
+    "south_profit_gap_vs_other_regions": 124966,
+    "south_gap_top3": {
+      "Telephones and Communication": 57670,
+      "Office Machines": 38068,
+      "Binders and Binder Accessories": 28923
+    }
+  },
+  "data_audit": {
+    "rows_raw": 9426,
+    "duplicate_rows_removed": 0,
+    "order_priority_not_specified_to_missing": 1881,
+    "row_id_is_not_an_id": true,
+    "order_ids_spanning_multiple_dates": 1448,
+    "order_ids_total": 6455,
+    "lines_profit_exceeds_sales": 367,
+    "lines_shipped_over_30_days_after_order": 419,
+    "lines_shipped_before_order": 0,
+    "months_with_no_orders": [
+      "2016-03",
+      "2016-04",
+      "2016-05"
+    ],
+    "months_under_10k_sales_incl_empty": 15,
+    "missing_values_after_cleaning": {
+      "Order Priority": 1881
+    }
   }
 }
